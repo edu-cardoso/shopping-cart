@@ -18,17 +18,30 @@ function removeLoading() {
 }
 
 async function appendProduct() {
-  loading();
-  const data = await fetchProductsList('computador');
-  data.forEach((product) => {
-    products.appendChild(createProductElement({
-      id: product.id,
-      title: product.title,
-      thumbnail: product.thumbnail,
-      price: product.price,
-    }));
-  });
-  removeLoading();
+  try {
+    loading();
+    const data = await fetchProductsList('computador');
+    data.forEach((product) => {
+      products.appendChild(createProductElement({
+        id: product.id,
+        title: product.title,
+        thumbnail: product.thumbnail,
+        price: product.price,
+      }));
+    });
+    removeLoading();
+  } catch (error) {
+    error.message = 'Algum erro ocorreu, recarregue a página e tente novamente';
+    products.appendChild(createCustomElement('p', 'error', error.message));
+  }
+}
+
+async function calculateCartPrice() {
+  const totalPrice = document.querySelector('.total-price');
+  const savedProducts = getSavedCartIDs().map((item) => fetchProduct(item));
+  const productsResolved = await Promise.all(savedProducts);
+  const total = productsResolved.reduce((acc, { price }) => acc + price, 0);
+  totalPrice.innerText = total;
 }
 
 async function componentCart(id) {
@@ -40,6 +53,7 @@ async function componentCart(id) {
     price: data.price,
     pictures: data.pictures,
   }));
+  calculateCartPrice();
 }
 
 function addProductToCart() {
@@ -51,6 +65,7 @@ function addProductToCart() {
     });
   });
 }
+
 async function createSavedCart() {
   if (getSavedCartIDs() !== null) {
     const savedProducts = getSavedCartIDs().map((item) => fetchProduct(item));
@@ -64,6 +79,7 @@ async function createSavedCart() {
       }));
     });
   }
+  calculateCartPrice();
 }
 
 window.onload = async () => {
