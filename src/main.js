@@ -51,8 +51,23 @@ function addProductToCart() {
     });
   });
 }
+async function createSavedCart() {
+  if (getSavedCartIDs() !== null) {
+    const savedProducts = getSavedCartIDs().map((item) => fetchProduct(item));
+    const productsResolved = await Promise.all(savedProducts);
+    productsResolved.forEach((item) => {
+      cartProducts.appendChild(createCartProductElement({
+        id: item.id,
+        title: item.title,
+        price: item.price,
+        pictures: item.pictures,
+      }));
+    });
+  }
+}
 
 window.onload = async () => {
   await appendProduct();
   addProductToCart();
+  createSavedCart();
 };
