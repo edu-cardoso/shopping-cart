@@ -9,6 +9,7 @@ import './style.css';
 document.querySelector('.cep-button').addEventListener('click', searchCep);
 const products = document.querySelector('.products');
 const cartProducts = document.querySelector('.cart__products');
+const cartContainer = document.querySelector('.cart');
 
 function loading() {
   products.appendChild(createCustomElement('p', 'loading', 'carregando...'));
@@ -75,8 +76,24 @@ async function createSavedCart() {
   calculateCartPrice();
 }
 
+function openCart() {
+  const cartIcon = document.querySelector('.container-cartTitle');
+  cartIcon.addEventListener('click', () => {
+    cartContainer.style.right = '0';
+  });
+}
+
+function closeCart() {
+  const closeCartIcon = document.querySelector('.material-symbols-outlined');
+  closeCartIcon.addEventListener('click', () => {
+    cartContainer.style.right = '-320px';
+  });
+}
+
 window.onload = async () => {
   await appendProduct();
   addProductToCart();
   createSavedCart();
+  openCart();
+  closeCart();
 };

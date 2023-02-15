@@ -46,7 +46,7 @@ export async function calculateCartPrice() {
   const savedProducts = getSavedCartIDs().map((item) => fetchProduct(item));
   const productsResolved = await Promise.all(savedProducts);
   const total = productsResolved.reduce((acc, { price }) => acc + price, 0);
-  totalPrice.innerText = total;
+  totalPrice.innerText = total.toFixed(2).replace('.', ',');
 }
 
 /**
@@ -85,7 +85,12 @@ export const createCartProductElement = ({ id, title, price, pictures }) => {
   const infoContainer = createCustomElement('div', 'cart__product__info-container');
   infoContainer.appendChild(createCustomElement('span', 'product__title', title));
   const priceElement = createCustomElement('span', 'product__price', 'R$ ');
-  priceElement.appendChild(createCustomElement('span', 'product__price__value', price));
+  priceElement
+    .appendChild(createCustomElement(
+      'span',
+      'product__price__value',
+      price.toFixed(2).replace('.', ','),
+    ));
   infoContainer.appendChild(priceElement);
 
   li.appendChild(infoContainer);
@@ -123,7 +128,12 @@ export const createProductElement = ({ id, title, thumbnail, price }) => {
   section.appendChild(createCustomElement('span', 'product__title', title));
 
   const priceElement = createCustomElement('span', 'product__price', 'R$ ');
-  priceElement.appendChild(createCustomElement('span', 'product__price__value', price));
+  priceElement
+    .appendChild(createCustomElement(
+      'span',
+      'product__price__value',
+      price.toFixed(2).replace('.', ','),
+    ));
   section.appendChild(priceElement);
 
   const cartButton = createCustomElement(
