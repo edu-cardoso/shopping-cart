@@ -1,7 +1,7 @@
 import { searchCep } from './helpers/cepFunctions';
 import { fetchProduct, fetchProductsList } from './helpers/fetchFunctions';
 import { createProductElement, createCustomElement,
-  createCartProductElement }
+  createCartProductElement, calculateCartPrice }
   from './helpers/shopFunctions';
 import { saveCartID, getSavedCartIDs } from './helpers/cartFunctions';
 import './style.css';
@@ -35,14 +35,6 @@ async function appendProduct() {
     error.message = 'Algum erro ocorreu, recarregue a página e tente novamente';
     products.appendChild(createCustomElement('p', 'error', error.message));
   }
-}
-
-async function calculateCartPrice() {
-  const totalPrice = document.querySelector('.total-price');
-  const savedProducts = getSavedCartIDs().map((item) => fetchProduct(item));
-  const productsResolved = await Promise.all(savedProducts);
-  const total = productsResolved.reduce((acc, { price }) => acc + price, 0);
-  totalPrice.innerText = total;
 }
 
 async function componentCart(id) {
