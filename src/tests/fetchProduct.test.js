@@ -18,5 +18,7 @@ describe('Teste a função fetchProduct', () => {
       expect(fetch).toHaveBeenCalledWith('https://api.mercadolibre.com/items/MLB1405519561');
     });
 
-    
+    it('Ao chamar a função fetchProduct sem argumento, retorna um erro', () => {
+      expect(() => fetchProduct()).rejects.toThrow('ID não informado');
+    });
 });
