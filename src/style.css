@@ -5,6 +5,10 @@
   padding: 0;
 }
 
+body {
+  overflow-x: hidden;
+}
+
 .header {
   position: relative;
   background-color: rgb(65, 25, 127);
