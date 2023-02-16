@@ -6,11 +6,13 @@
 }
 
 body {
+  height: 100vh;
+  width: 100vw;
   overflow-x: hidden;
 }
 
 .header {
-  position: relative;
+  position: fixed;
   background-color: rgb(65, 25, 127);
   box-sizing: border-box;
   display: flex;
@@ -37,9 +39,9 @@ body {
 .container-cartTitle {
   position: relative;
   display: flex;
+  justify-content: flex-end;
   align-items: center;
-  justify-content: space-evenly;
-  padding: 0 100px;
+  padding-right: 30px;
   width: 25%;
   height: 100%;
   cursor: pointer;
@@ -70,7 +72,7 @@ body {
   flex-wrap: wrap;
   width: 100%;
   justify-content: center;
-  margin: 40px 0;
+  margin: 90px 0 20px 0;
 }
 
 .product {
@@ -180,7 +182,8 @@ body {
 
 .cart {
   display: flex;
-  position: absolute;
+  position: fixed;
+  top: 60px;
   width: 300px;
   transition: 500ms;
   transition-property: right;
@@ -347,7 +350,6 @@ body {
 }
 
 @media screen and ( max-width : 1400px ) {
-
   .cart {
     height: 630px;
   }
