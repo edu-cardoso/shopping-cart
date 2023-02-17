@@ -19,6 +19,7 @@ body {
   align-items: center;
   width: 100%;
   height: 60px;
+  z-index: 2;
 }
 
 .container-title {
@@ -359,6 +360,10 @@ body {
   .logo {
     width: 150px;
     margin-left: 15px;
+  }
+
+  .cart {
+    height: 550px;
   }
 
   .container-cartTitle {
